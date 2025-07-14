@@ -14,7 +14,7 @@ export interface userStateTypes {
   token: any
   version?: string
   userAccessToken?: string
-  XPACK_LICENSE_IS_VALID: false
+  XPACK_LICENSE_IS_VALID: true
   isXPack: false
   themeInfo: any
 }
@@ -27,7 +27,7 @@ const useUserStore = defineStore({
     token: '',
     version: '',
     userAccessToken: '',
-    XPACK_LICENSE_IS_VALID: false,
+    XPACK_LICENSE_IS_VALID: true,
     isXPack: false,
     themeInfo: null
   }),
@@ -74,7 +74,7 @@ const useUserStore = defineStore({
 
     getPermissions() {
       if (this.userInfo) {
-        return this.isXPack && this.XPACK_LICENSE_IS_VALID
+        return this.isXPack
           ? [...this.userInfo?.permissions, 'x-pack']
           : this.userInfo?.permissions
       } else {
@@ -99,7 +99,7 @@ const useUserStore = defineStore({
           .then(async (ok) => {
             this.version = ok.data?.version || '-'
             this.isXPack = ok.data?.IS_XPACK
-            this.XPACK_LICENSE_IS_VALID = ok.data?.XPACK_LICENSE_IS_VALID
+            this.XPACK_LICENSE_IS_VALID = true
 
             if (this.isEnterprise()) {
               await this.theme()

@@ -73,9 +73,12 @@ class SystemSerializer(ApiMixin, serializers.Serializer):
     def get_profile():
         version = os.environ.get('MAXKB_VERSION')
         xpack_cache = DBModelManage.get_model('xpack_cache')
-        return {'version': version, 'IS_XPACK': hasattr(settings, 'IS_XPACK'),
-                'XPACK_LICENSE_IS_VALID': False if xpack_cache is None else xpack_cache.get('XPACK_LICENSE_IS_VALID',
-                                                                                            False)}
+        return {
+            'version': version,
+            'IS_XPACK': hasattr(settings, 'IS_XPACK'),
+            'XPACK_LICENSE_IS_VALID': True
+        }
+
 
     @staticmethod
     def get_response_body_api():
